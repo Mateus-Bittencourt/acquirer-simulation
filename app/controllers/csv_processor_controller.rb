@@ -45,8 +45,7 @@ class CsvProcessorController < ApplicationController
   private
 
   def send_to_anti_fraud_api(transaction)
-    uri = URI.parse('http://localhost:3001/transactions') # URL do endpoint da API antifraude
-
+    uri = URI.parse('http://localhost:3001/transactions')
     request = Net::HTTP::Post.new(uri)
     request.content_type = 'application/json'
     request.body = {
@@ -54,7 +53,7 @@ class CsvProcessorController < ApplicationController
       merchant_id: transaction.merchant_id,
       user_id: transaction.user_id,
       card_number: transaction.card_number,
-      transaction_date: transaction.transaction_date.to_s(:db),
+      transaction_date: transaction.transaction_date,
       transaction_amount: transaction.transaction_amount,
       device_id: transaction.device_id,
     }.to_json
